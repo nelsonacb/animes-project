@@ -1,3 +1,321 @@
-/* You can add global styles to this file, and also import other style files */
-
 @import 'tailwindcss';
+
+/* ═══════════════════════════════════════════════════════════════
+   VARIABLES CSS - LIGHT MODE (POR DEFECTO)
+   ═══════════════════════════════════════════════════════════════ */
+
+:root {
+  /* Colores base para Material 3 */
+  --mat-sys-primary: #3f51b5;
+  --mat-sys-on-primary: #ffffff;
+  --mat-sys-primary-container: #c5cae9;
+  --mat-sys-on-primary-container: #1a237e;
+  --mat-sys-secondary: #7986cb;
+  --mat-sys-on-secondary: #ffffff;
+  --mat-sys-secondary-container: #e8eaf6;
+  --mat-sys-on-secondary-container: #1a237e;
+  --mat-sys-surface: #ffffff;
+  --mat-sys-surface-container: #f5f5f5;
+  --mat-sys-surface-container-high: #eeeeee;
+  --mat-sys-on-surface: #1c1b1f;
+  --mat-sys-on-surface-variant: #49454f;
+  --mat-sys-outline: #e0e0e0;
+  --mat-sys-outline-variant: #cac4d0;
+  --mat-sys-background: #fefefe;
+  --mat-sys-on-background: #1c1b1f;
+  --mat-sys-error: #b3261e;
+  --mat-sys-on-error: #ffffff;
+
+  /* Colores personalizados para componentes */
+  --card-bg: #ffffff;
+  --card-border: #e5e7eb;
+  --text-primary: #111827;
+  --text-secondary: #6b7280;
+  --text-tertiary: #9ca3af;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   VARIABLES CSS - DARK MODE
+   ═══════════════════════════════════════════════════════════════ */
+
+.dark {
+  /* Colores base para Material 3 - Dark */
+  --mat-sys-primary: #90caf9;
+  --mat-sys-on-primary: #0d47a1;
+  --mat-sys-primary-container: #1565c0;
+  --mat-sys-on-primary-container: #e3f2fd;
+  --mat-sys-secondary: #90caf9;
+  --mat-sys-on-secondary: #0d47a1;
+  --mat-sys-secondary-container: #1e3a5f;
+  --mat-sys-on-secondary-container: #e3f2fd;
+  --mat-sys-surface: #121212;
+  --mat-sys-surface-container: #1e1e1e;
+  --mat-sys-surface-container-high: #2d2d2d;
+  --mat-sys-on-surface: #e6e1e5;
+  --mat-sys-on-surface-variant: #cac4d0;
+  --mat-sys-outline: #49454f;
+  --mat-sys-outline-variant: #444746;
+  --mat-sys-background: #121212;
+  --mat-sys-on-background: #e6e1e5;
+  --mat-sys-error: #f2b8b5;
+  --mat-sys-on-error: #601410;
+
+  /* Colores personalizados para componentes - Dark */
+  --card-bg: #1e1e1e;
+  --card-border: #333333;
+  --text-primary: #f9fafb;
+  --text-secondary: #9ca3af;
+  --text-tertiary: #6b7280;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MAT-CARD - AMBOS MODOS
+   ═══════════════════════════════════════════════════════════════ */
+
+mat-card {
+  background-color: var(--card-bg) !important;
+  border-color: var(--card-border) !important;
+  color: var(--text-primary) !important;
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+mat-card.mat-mdc-card-outlined {
+  border: 1px solid var(--card-border);
+}
+
+mat-card-header {
+  color: var(--text-primary);
+}
+
+mat-card-title {
+  color: var(--text-primary);
+}
+
+mat-card-subtitle {
+  color: var(--text-secondary);
+}
+
+mat-card-content {
+  color: var(--text-secondary);
+}
+
+mat-card-actions {
+  background-color: transparent;
+  color: var(--text-primary);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MAT-CHIP - AMBOS MODOS
+   ═══════════════════════════════════════════════════════════════ */
+
+mat-chip {
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+/* Chip por defecto (gris) */
+mat-chip:not([color]) {
+  background-color: var(--mat-sys-surface-container-high) !important;
+  color: var(--text-primary) !important;
+}
+
+.dark mat-chip:not([color]) {
+  background-color: #333333 !important;
+  color: #e5e5e5 !important;
+}
+
+/* Chip primario */
+mat-chip[color='primary'] {
+  background-color: var(--mat-sys-primary-container) !important;
+  color: var(--mat-sys-on-primary-container) !important;
+}
+
+/* Chip de advertencia (warn) */
+mat-chip[color='warn'] {
+  background-color: #fee2e2 !important;
+  color: #991b1b !important;
+}
+
+.dark mat-chip[color='warn'] {
+  background-color: #450a0a !important;
+  color: #fca5a5 !important;
+}
+
+/* Chip de énfasis (accent) */
+mat-chip[color='accent'] {
+  background-color: #d1fae5 !important;
+  color: #065f46 !important;
+}
+
+.dark mat-chip[color='accent'] {
+  background-color: #064e3b !important;
+  color: #6ee7b7 !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MAT-PROGRESS-BAR - AMBOS MODOS
+   ═══════════════════════════════════════════════════════════════ */
+
+mat-progress-bar {
+  border-radius: 4px;
+}
+
+mat-progress-bar .mdc-linear-progress__bar-inner {
+  background-color: var(--mat-sys-primary) !important;
+}
+
+mat-progress-bar .mdc-linear-progress__buffer {
+  background-color: var(--mat-sys-surface-container-high) !important;
+}
+
+.dark mat-progress-bar .mdc-linear-progress__buffer {
+  background-color: #333333 !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MAT-SPINNER - AMBOS MODOS
+   ═══════════════════════════════════════════════════════════════ */
+
+mat-spinner circle {
+  stroke: var(--mat-sys-primary) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MAT-BUTTON - AMBOS MODOS
+   ═══════════════════════════════════════════════════════════════ */
+
+button[mat-button],
+button[mat-raised-button],
+button[mat-icon-button],
+a[mat-button],
+a[mat-raised-button] {
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+button[mat-button] {
+  color: var(--mat-sys-primary) !important;
+}
+
+button[mat-raised-button] {
+  background-color: var(--mat-sys-primary) !important;
+  color: var(--mat-sys-on-primary) !important;
+}
+
+button[mat-raised-button]:hover {
+  opacity: 0.9;
+}
+
+button[mat-icon-button] {
+  color: var(--text-secondary) !important;
+}
+
+button[mat-icon-button]:hover {
+  background-color: var(--mat-sys-surface-container-high) !important;
+}
+
+.dark button[mat-icon-button]:hover {
+  background-color: #333333 !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MAT-TOOLBAR - AMBOS MODOS
+   ═══════════════════════════════════════════════════════════════ */
+
+mat-toolbar {
+  background-color: var(--card-bg) !important;
+  color: var(--text-primary) !important;
+  border-bottom: 1px solid var(--card-border);
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MAT-SLIDE-TOGGLE - AMBOS MODOS
+   ═══════════════════════════════════════════════════════════════ */
+
+mat-slide-toggle {
+  --mdc-switch-track-color: #e5e5e5;
+  --mdc-switch-selected-track-color: var(--mat-sys-primary);
+}
+
+.dark mat-slide-toggle {
+  --mdc-switch-track-color: #424242;
+  --mdc-switch-selected-track-color: var(--mat-sys-primary);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MAT-ICON - AMBOS MODOS
+   ═══════════════════════════════════════════════════════════════ */
+
+mat-icon {
+  color: inherit;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TRANSICIONES SUAVES PARA TODO EL SITIO
+   ═══════════════════════════════════════════════════════════════ */
+
+* {
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SCROLLBAR PERSONALIZADA
+   ═══════════════════════════════════════════════════════════════ */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #1e1e1e;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   UTILIDADES PERSONALIZADAS
+   ═══════════════════════════════════════════════════════════════ */
+
+.line-clamp-1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

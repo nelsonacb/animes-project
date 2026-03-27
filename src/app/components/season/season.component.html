@@ -1,0 +1,139 @@
+<div class="min-h-screen py-8 px-4 transition-colors" [class]="getAnimeSeasonBGClasses()">
+  <div class="max-w-7xl mx-auto">
+    <!-- 📅 Header con Título y Filtros -->
+    <div class="mb-8">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+        <!-- Título -->
+        <div>
+          <h1 class="text-3xl font-bold mb-2" [class]="getAnimeSeasonClasses()">
+            <mat-icon class="text-primary align-middle mr-2">calendar_today</mat-icon>
+            {{ seasonTitle() }}
+          </h1>
+          @if (isCurrentSeason()) {
+            <span
+              class="inline-flex items-center gap-1 text-sm text-primary bg-primary/10 px-3 py-1 rounded-full"
+            >
+              <mat-icon class="scale-75">live_tv</mat-icon>
+              Temporada Actual
+            </span>
+          }
+        </div>
+
+        <!-- Botón ir a temporada actual -->
+        @if (!isCurrentSeason()) {
+          <button mat-button color="primary" (click)="goToCurrentSeason()" class="text-primary!">
+            <mat-icon>today</mat-icon>
+            Ver Temporada Actual
+          </button>
+        }
+      </div>
+
+      <!-- Filtros: Año y Temporada -->
+      <div class="flex flex-wrap gap-4">
+        <!-- Select de Año -->
+        <mat-form-field appearance="outline" class="w-full md:w-48">
+          <mat-label>Año</mat-label>
+          <mat-select [value]="selectedYear()" (selectionChange)="onYearChange($event.value)">
+            @for (year of availableYears; track year) {
+              <mat-option [value]="year">
+                {{ year }}
+                @if (year === currentSeasonInfo()?.year) {
+                  <span class="text-primary text-xs ml-1">(Actual)</span>
+                }
+              </mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <!-- Select de Temporada -->
+        <mat-form-field appearance="outline" class="w-full md:w-56">
+          <mat-label>Temporada</mat-label>
+          <mat-select [value]="selectedSeason()" (selectionChange)="onSeasonChange($event.value)">
+            @for (season of availableSeasons; track season.value) {
+              <mat-option [value]="season.value">
+                <mat-icon class="scale-75 mr-2">{{ getSeasonIcon(season.value) }}</mat-icon>
+                {{ season.label }}
+                @if (season.value === currentSeasonInfo()?.season) {
+                  <span class="text-primary text-xs ml-1">(Actual)</span>
+                }
+              </mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <!-- Chips de acceso rápido a temporadas del año seleccionado -->
+      <div class="flex flex-wrap gap-2 mt-4">
+        @for (season of availableSeasons; track season.value) {
+          <mat-chip
+            (click)="onSeasonChange(season.value)"
+            class="cursor-pointer transition-all"
+            [class.!bg-primary]="selectedSeason() === season.value"
+            [class.!text-white]="selectedSeason() === season.value"
+            [class.bg-gray-200]="selectedSeason() !== season.value"
+            [class.dark:bg-gray-700]="selectedSeason() !== season.value"
+            [class.text-gray-700]="selectedSeason() !== season.value"
+            [class.dark:text-gray-300]="selectedSeason() !== season.value"
+          >
+            <mat-icon class="scale-75 mr-1">{{ getSeasonIcon(season.value) }}</mat-icon>
+            {{ getSeasonLabel(season.value) }}
+          </mat-chip>
+        }
+      </div>
+    </div>
+
+    <!-- ✅ LOADING: Componente reutilizable -->
+    <app-ui-loading
+      [show]="loading()"
+      message="Cargando animes de {{ seasonTitle().toLowerCase() }}..."
+      size="medium"
+    />
+
+    <!-- ✅ ERROR: Componente reutilizable -->
+    @if (error()) {
+      <app-ui-error
+        [message]="error()!"
+        [showRetry]="true"
+        retryLabel="Reintentar"
+        (retry)="loadSeasonAnime()"
+      />
+    }
+
+    <!-- 📺 Grid de Animes (solo si no hay loading ni error) -->
+    @if (!loading() && !error() && animes().length > 0) {
+      <div id="season-results" class="mb-4">
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          Mostrando {{ animes().length }} animes de {{ seasonTitle().toLowerCase() }}
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+        @for (anime of animes(); track anime.mal_id) {
+          <app-anime-card [anime]="anime" [showRank]="false" [maxGenres]="2" />
+        }
+      </div>
+
+      <!-- ✅ PAGINATION: Componente reutilizable -->
+      <app-ui-pagination
+        [currentPage]="currentPage()"
+        [hasNextPage]="hasNextPage()"
+        prevLabel="Anterior"
+        nextLabel="Siguiente"
+        (pageChanged)="onPageChanged($event)"
+      />
+    }
+
+    <!-- 📭 Empty State (específico de este componente) -->
+    @if (!loading() && !error() && animes().length === 0) {
+      <div class="text-center py-20">
+        <mat-icon class="text-gray-400 dark:text-gray-600 text-6xl mb-4"> calendar_off </mat-icon>
+        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">
+          No hay animes registrados
+        </h3>
+        <p class="text-gray-500 dark:text-gray-400">
+          No se encontraron animes para {{ seasonTitle().toLowerCase() }} de {{ selectedYear() }}
+        </p>
+      </div>
+    }
+  </div>
+</div>

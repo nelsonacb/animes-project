@@ -1,0 +1,33 @@
+/* Ajustes para selects de Material */
+::ng-deep .mat-mdc-form-field {
+  --mdc-outlined-text-field-outline-color: #e5e7eb;
+}
+
+.dark ::ng-deep .mat-mdc-form-field {
+  --mdc-outlined-text-field-outline-color: #424242;
+}
+
+/* Animación de entrada para cards */
+app-anime-card {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Chips de temporadas con hover effect */
+mat-chip {
+  transition: all 0.2s ease;
+}
+
+mat-chip:hover {
+  transform: translateY(-2px);
+}

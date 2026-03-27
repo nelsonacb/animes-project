@@ -1,0 +1,33 @@
+<div class="flex justify-center items-center gap-3 mt-8">
+  <!-- Botón Anterior -->
+  <button
+    mat-button
+    (click)="goToPrevious()"
+    [disabled]="currentPage() === 1"
+    class="text-primary!"
+    aria-label="Página anterior"
+  >
+    <mat-icon>chevron_left</mat-icon>
+    <span class="hidden sm:inline">{{ prevLabel() }}</span>
+  </button>
+
+  <!-- Indicador de página actual -->
+  <span
+    class="px-4 py-2 bg-primary/10 text-primary font-medium rounded-lg select-none"
+    aria-live="polite"
+  >
+    Página {{ currentPage() }}
+  </span>
+
+  <!-- Botón Siguiente -->
+  <button
+    mat-button
+    (click)="goToNext()"
+    [disabled]="!hasNextPage()"
+    class="text-primary!"
+    aria-label="Página siguiente"
+  >
+    <span class="hidden sm:inline">{{ nextLabel() }}</span>
+    <mat-icon>chevron_right</mat-icon>
+  </button>
+</div>

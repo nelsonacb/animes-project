@@ -1,0 +1,109 @@
+<mat-card
+  class="group cursor-pointer hover:shadow-xl transition-all duration-300 h-full flex flex-col"
+  appearance="outlined"
+  [routerLink]="['/anime', anime.mal_id]"
+>
+  <!-- 🖼️ Imagen con overlay hover -->
+  <div class="relative aspect-3/4 overflow-hidden rounded-t-lg">
+    <img
+      [src]="getImageUrl()"
+      [alt]="anime.title"
+      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+      loading="lazy"
+      width="400"
+      height="600"
+    />
+
+    <!-- Badge de Rank -->
+    @if (showRank && anime.rank) {
+      <span
+        class="absolute top-2 left-2 bg-yellow-500 text-black text-xs font-bold px-2 py-1 rounded-full shadow-md"
+      >
+        #{{ anime.rank }}
+      </span>
+    }
+
+    <!-- Overlay con info al hacer hover -->
+    <div
+      class="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+    >
+      <div class="absolute bottom-0 left-0 right-0 p-3">
+        <div class="flex items-center gap-1 text-white text-sm">
+          <mat-icon class="text-yellow-400 scale-75">star</mat-icon>
+          <span class="font-semibold">{{ anime.score }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 📋 Contenido del card -->
+  <mat-card-content class="p-4 grow flex flex-col">
+    <h3
+      class="font-bold text-lg line-clamp-2 mb-2 group-hover:text-primary transition-colors"
+      [class]="getAnimeCardClasses()"
+    >
+      {{ anime.title }}
+    </h3>
+
+    <!-- Título en inglés -->
+    @if (anime.title_english && anime.title_english !== anime.title) {
+      <p class="text-sm line-clamp-1 mb-3" [class]="getAnimeCardClasses()">
+        {{ anime.title_english }}
+      </p>
+    }
+
+    <!-- Tags: Tipo + Episodios + Estado -->
+    <div class="flex flex-wrap gap-2 mb-3">
+      <mat-chip class="h-6! text-xs!" color="primary">
+        {{ anime.type }}
+      </mat-chip>
+      @if (anime.episodes) {
+        <mat-chip class="h-6! text-xs!"> {{ anime.episodes }} eps </mat-chip>
+      }
+      <mat-chip class="h-6! text-xs!" [color]="anime.airing ? 'accent' : 'default'">
+        {{ anime.airing ? 'On Air' : 'Finalized' }}
+      </mat-chip>
+    </div>
+
+    <!-- Géneros (truncados) -->
+    @if (anime.genres?.length) {
+      <div class="flex flex-wrap gap-1 mb-3">
+        @for (genre of anime.genres.slice(0, maxGenres); track genre.mal_id) {
+          <span
+            class="text-xs px-2 py-0.5 rounded bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300"
+          >
+            {{ genre.name }}
+          </span>
+        }
+        @if (anime.genres.length > maxGenres) {
+          <span class="text-xs text-gray-500 dark:text-gray-400">
+            +{{ anime.genres.length - maxGenres }}
+          </span>
+        }
+      </div>
+    }
+
+    <!-- Spacer para empujar el footer al fondo -->
+    <div class="grow"></div>
+
+    <mat-card-actions
+      class="p-0 pt-2 flex items-center justify-between border-t border-gray-200 dark:border-gray-700"
+    >
+      <div class="flex items-center gap-1">
+        <mat-icon class="text-yellow-500 scale-90">star</mat-icon>
+        <!-- ✅ SCORE: Negro en light, blanco en dark -->
+        <span class="font-bold" [class]="getAnimeCardClasses()">{{ anime.score }}</span>
+        <span class="text-xs text-gray-500 dark:text-gray-400">
+          ({{ anime.scored_by | number: '1.0-0' }})
+        </span>
+      </div>
+
+      @if (anime.studios?.[0]) {
+        <!-- ✅ ESTUDIO: Gris oscuro en light, gris claro en dark -->
+        <span class="text-xs text-gray-600 dark:text-gray-400 truncate max-w-30">
+          {{ anime.studios[0].name }}
+        </span>
+      }
+    </mat-card-actions>
+  </mat-card-content>
+</mat-card>

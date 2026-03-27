@@ -1,0 +1,43 @@
+/* Asegurar que los botones activos se vean bien */
+.mat-mdc-button {
+  &.text-primary {
+    --mdc-text-button-label-text-color: var(--mat-sys-primary);
+  }
+}
+
+/* Transiciones suaves para el tema */
+mat-toolbar {
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+/* Menú móvil con animación de entrada */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Aplicar animación al menú móvil */
+.fixed.top-16 {
+  animation: slideDown 0.2s ease-out;
+}
+
+/* Dark mode overrides */
+.dark mat-toolbar {
+  --mdc-toolbar-container-color: theme('colors.gray.900');
+}
+
+/* Ajustar el toggle switch */
+mat-slide-toggle {
+  ::ng-deep .mdc-switch {
+    width: 36px;
+    height: 20px;
+  }
+}

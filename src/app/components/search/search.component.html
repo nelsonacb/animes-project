@@ -1,0 +1,107 @@
+<div class="min-h-screen py-8 px-4 transition-colors" [class]="getAnimeSearchBGClasses()">
+  <div class="max-w-7xl mx-auto">
+    <!-- 🔍 Header con Input de Búsqueda -->
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold mb-6" [class]="getAnimeSearchClasses()">Buscar Anime</h1>
+
+      <!-- Input de Material con íconos -->
+      <mat-form-field appearance="outline" class="w-full rounded-lg">
+        <mat-icon matPrefix class="text-gray-400">search</mat-icon>
+
+        <input
+          matInput
+          [formControl]="searchControl"
+          (keyup.enter)="onSearchEnter()"
+          placeholder="Escribe el nombre de un anime..."
+          class="placeholder-gray-400"
+          [class]="getAnimeSearchClasses()"
+          aria-label="Buscar anime"
+        />
+
+        <!-- Botón para limpiar búsqueda -->
+        @if (searchControl.value) {
+          <button matSuffix mat-icon-button (click)="clearSearch()" aria-label="Limpiar búsqueda">
+            <mat-icon class="text-gray-400 hover:text-gray-600">close</mat-icon>
+          </button>
+        }
+
+        <mat-hint>
+          @if (!currentQuery()) {
+            <span class="text-gray-500">Mínimo 2 caracteres para buscar</span>
+          } @else if (loading()) {
+            <span class="text-primary">Buscando resultados...</span>
+          } @else {
+            <span class="text-gray-500"> {{ totalResults() }} resultados encontrados </span>
+          }
+        </mat-hint>
+      </mat-form-field>
+    </div>
+
+    <!-- 🔄 Loading State -->
+    @if (loading() && currentQuery()) {
+      <app-ui-loading [show]="loading()" message="Buscando resultados..." />
+    }
+
+    <!-- ❌ Error State -->
+    @if (error()) {
+      <app-ui-error [message]="error()!" (retry)="performSearch(currentQuery(), currentPage())" />
+    }
+
+    <!-- 📊 Resultados -->
+    @if (!loading() && !error() && searchResults().length > 0) {
+      <div id="search-results" class="mb-8">
+        <!-- Contador de resultados -->
+        <div class="flex items-center justify-between mb-4">
+          <p class="text-sm text-gray-600 dark:text-gray-400">
+            Mostrando {{ searchResults().length }} de {{ totalResults() }} resultados
+            @if (currentQuery()) {
+              para "<strong class="text-primary">{{ currentQuery() }}</strong
+              >"
+            }
+          </p>
+
+          <!-- Chips de filtros rápidos (futuro) -->
+          <mat-chip-set>
+            <mat-chip class="h-7! text-xs!" color="primary"> Más relevantes </mat-chip>
+          </mat-chip-set>
+        </div>
+
+        <!-- Grid de Cards (reusamos AnimeCardComponent) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+          @for (anime of searchResults(); track anime.mal_id) {
+            <app-anime-card [anime]="anime" [showRank]="false" [maxGenres]="2" />
+          }
+        </div>
+
+        <!-- Paginación -->
+        @if (hasNextPage() || currentPage() > 1) {
+          <app-ui-pagination
+            [currentPage]="currentPage()"
+            [hasNextPage]="hasNextPage()"
+            prevLabel="Anterior"
+            nextLabel="Siguiente"
+            (pageChanged)="goToPage($event)"
+          />
+        }
+      </div>
+    }
+
+    <!-- 📭 Empty State -->
+    @if (!loading() && !error() && searchResults().length === 0) {
+      <div class="text-center py-20">
+        <mat-icon class="text-gray-400 dark:text-gray-600 text-6xl mb-4">
+          {{ currentQuery() ? 'search_off' : 'manage_search' }}
+        </mat-icon>
+        <h3 class="text-xl font-semibold mb-2" [class]="getAnimeSearchClasses()">
+          {{ emptyMessage() }}
+        </h3>
+        @if (!currentQuery()) {
+          <p class="text-gray-500 dark:text-gray-400 max-w-md mx-auto">
+            Prueba buscando por título, personaje o estudio. Ej: "Naruto", "Attack on Titan",
+            "Madhouse"
+          </p>
+        }
+      </div>
+    }
+  </div>
+</div>

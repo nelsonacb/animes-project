@@ -1,0 +1,16 @@
+/* Ajustes específicos para el layout */
+:host {
+  display: block;
+  min-height: 100vh;
+  background: theme('colors.gray.50');
+}
+
+.dark :host {
+  background: theme('colors.gray.900');
+}
+
+/* Asegurar que los cards tengan altura consistente */
+app-anime-card {
+  display: block;
+  height: 100%;
+}

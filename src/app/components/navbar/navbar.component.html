@@ -1,0 +1,82 @@
+<mat-toolbar
+  class="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 shadow-md"
+>
+  <!-- Logo / Nombre del sitio -->
+  <a
+    routerLink="/"
+    class="flex items-center gap-2 text-xl font-bold text-primary hover:opacity-80 transition-opacity"
+  >
+    <mat-icon class="text-3xl">animation</mat-icon>
+    <span class="hidden sm:inline">AnimeHub</span>
+  </a>
+
+  <!-- Spacer para empujar contenido a la derecha -->
+  <span class="flex-1"></span>
+
+  <!-- Menú Desktop (visible en pantallas medianas y grandes) -->
+  <nav class="hidden md:flex items-center gap-1">
+    @for (item of menuItems; track item.route) {
+      <a
+        mat-button
+        [routerLink]="item.route"
+        routerLinkActive="!text-primary"
+        #rla="routerLinkActive"
+        [class.!text-primary]="rla.isActive"
+        class="flex items-center gap-1"
+      >
+        <mat-icon>{{ item.icon }}</mat-icon>
+        {{ item.label }}
+      </a>
+    }
+  </nav>
+
+  <div class="flex items-center gap-2 ml-2">
+    <app-theme-switch
+      size="medium"
+      [showIcon]="false"
+      [showLabel]="false"
+      class="hidden sm:block"
+    ></app-theme-switch>
+
+    <!-- Para móvil: también usamos el componente pero con tamaño small (opcional) -->
+    <app-theme-switch
+      size="small"
+      [showIcon]="true"
+      [showLabel]="false"
+      class="sm:hidden"
+    ></app-theme-switch>
+
+    <!-- Menú Hamburguesa -->
+    <button mat-icon-button (click)="toggleMobileMenu()" class="md:hidden!" aria-label="Menú">
+      <mat-icon>{{ isMobileMenuOpen() ? 'close' : 'menu' }}</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>
+
+<!-- Menú Móvil (dropdown) -->
+@if (isMobileMenuOpen()) {
+  <div
+    class="fixed top-16 left-0 right-0 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 shadow-lg md:hidden z-40"
+  >
+    <nav class="flex flex-col p-2">
+      @for (item of menuItems; track item.route) {
+        <a
+          mat-button
+          [routerLink]="item.route"
+          (click)="closeMobileMenu()"
+          routerLinkActive="!bg-primary/10 !text-primary"
+          #rla="routerLinkActive"
+          [class.!bg-primary/10]="rla.isActive"
+          [class.!text-primary]="rla.isActive"
+          class="flex items-center gap-3 py-3 px-4 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+        >
+          <mat-icon>{{ item.icon }}</mat-icon>
+          <span>{{ item.label }}</span>
+        </a>
+      }
+    </nav>
+  </div>
+}
+
+<!-- Spacer para que el contenido no quede debajo del navbar fijo -->
+<div class="h-16"></div>

@@ -1,0 +1,21 @@
+/* Asegurar que el spinner tenga color primario */
+mat-spinner circle {
+  stroke: var(--mat-sys-primary, #3f51b5);
+}
+
+/* Animación suave de entrada */
+:host {
+  display: block;
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

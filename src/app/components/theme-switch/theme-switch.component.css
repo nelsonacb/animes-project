@@ -1,0 +1,25 @@
+/* Transiciones suaves para el toggle */
+mat-slide-toggle {
+  transition: all 0.3s ease;
+}
+
+/* Ajustar tamaño del switch */
+::ng-deep .mdc-switch {
+  width: 36px;
+  height: 20px;
+}
+
+/* Dark mode: ajustar colores del switch */
+.dark ::ng-deep .mdc-switch {
+  --mdc-switch-track-color: #424242;
+  --mdc-switch-selected-track-color: #3f51b5;
+}
+
+/* Hover effect */
+button[mat-icon-button]:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.dark button[mat-icon-button]:hover {
+  background: rgba(255, 255, 255, 0.08);
+}

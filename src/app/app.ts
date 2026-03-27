@@ -1,12 +1,23 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { AnimeListComponent } from './components/anime-list/anime-list.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { ThemeService } from '../app/services/theme.service';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, AnimeListComponent, NavbarComponent],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.css',
 })
 export class App {
   protected readonly title = signal('animes-project');
+  private themeService = inject(ThemeService);
+
+  // ✅ Método para generar clases dinámicamente
+  getMainClasses(): string {
+    return this.themeService.isDarkMode()
+      ? 'min-h-screen bg-gray-900 transition-colors' // Dark mode
+      : 'min-h-screen bg-gray-50 transition-colors'; // Light mode
+  }
 }
