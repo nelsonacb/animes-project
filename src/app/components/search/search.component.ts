@@ -23,7 +23,7 @@ import { UiLoadingComponent } from '../shared/ui-loading/ui-loading.component';
   imports: [
     CommonModule,
     RouterModule,
-    ReactiveFormsModule, // ← Para FormControl
+    ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
@@ -44,9 +44,6 @@ export class SearchComponent implements OnInit, OnDestroy {
   private route = inject(ActivatedRoute);
   private themeService = inject(ThemeService);
 
-  // ═════════════════════════════════════════════════════════════
-  // SIGNALS PARA ESTADO
-  // ═════════════════════════════════════════════════════════════
   searchResults = signal<Anime[]>([]);
   loading = signal(false);
   error = signal<string | null>(null);
@@ -54,22 +51,12 @@ export class SearchComponent implements OnInit, OnDestroy {
   hasNextPage = signal(false);
   totalResults = signal(0);
 
-  // Query actual (para mostrar en UI)
   currentQuery = signal('');
 
-  // ═════════════════════════════════════════════════════════════
-  // FORM CONTROL PARA EL INPUT DE BÚSQUEDA
-  // ═════════════════════════════════════════════════════════════
   searchControl = new FormControl('');
 
-  // ═════════════════════════════════════════════════════════════
-  // CLEANUP PARA SUSCRIPCIONES RXJS
-  // ═════════════════════════════════════════════════════════════
   private destroy$ = new Subject<void>();
 
-  // ═════════════════════════════════════════════════════════════
-  // COMPUTED: Mensaje para estado vacío
-  // ═════════════════════════════════════════════════════════════
   emptyMessage = computed(() => {
     if (!this.currentQuery()) return 'Escribe el nombre de un anime para buscar';
     if (this.loading()) return 'Buscando...';
@@ -90,17 +77,12 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // ✅ Suscribirse a cambios en el input con DEBOUNCE
     this.searchControl.valueChanges
-      .pipe(
-        debounceTime(400), // ← Esperar 400ms después de dejar de escribir
-        distinctUntilChanged(), // ← Ignorar si el valor no cambió
-        takeUntil(this.destroy$), // ← Limpiar suscripción al destruir
-      )
+      .pipe(debounceTime(400), distinctUntilChanged(), takeUntil(this.destroy$))
       .subscribe((query) => {
         const searchTerm = query || '';
         this.currentQuery.set(searchTerm);
-        this.currentPage.set(1); // Resetear paginación al buscar
+        this.currentPage.set(1);
 
         if (searchTerm.length >= 2) {
           this.performSearch(searchTerm, 1);
@@ -110,25 +92,19 @@ export class SearchComponent implements OnInit, OnDestroy {
         }
       });
 
-    // ✅ Leer query de URL si existe: /search?q=naruto
     this.route.queryParams.pipe(takeUntil(this.destroy$)).subscribe((params) => {
       const queryFromUrl = params['q'];
       if (queryFromUrl && queryFromUrl.length >= 2) {
         this.searchControl.setValue(queryFromUrl);
-        // El valueChanges subscription ya se encargará de buscar
       }
     });
   }
 
   ngOnDestroy(): void {
-    // ✅ Limpiar suscripciones para evitar memory leaks
     this.destroy$.next();
     this.destroy$.complete();
   }
 
-  // ═════════════════════════════════════════════════════════════
-  // MÉTODO PRINCIPAL: EJECUTAR BÚSQUEDA
-  // ═════════════════════════════════════════════════════════════
   performSearch(query: string, page: number = 1): void {
     if (!query || query.trim().length < 2) return;
 
@@ -137,7 +113,6 @@ export class SearchComponent implements OnInit, OnDestroy {
 
     this.animeService.searchAnime(query.trim(), page).subscribe({
       next: (response) => {
-        // Si es página 1, reemplazar resultados; si no, agregar (para infinite scroll futuro)
         if (page === 1) {
           this.searchResults.set(response.data);
         } else {
@@ -148,7 +123,6 @@ export class SearchComponent implements OnInit, OnDestroy {
         this.totalResults.set(response.pagination.items.total);
         this.loading.set(false);
 
-        // ✅ Actualizar URL con el query (para compartir enlaces)
         this.updateUrlQuery(query);
       },
       error: (err) => {
@@ -159,14 +133,9 @@ export class SearchComponent implements OnInit, OnDestroy {
     });
   }
 
-  // ═════════════════════════════════════════════════════════════
-  // ACTUALIZAR URL CON EL QUERY (PARA COMPARTIR)
-  // ═════════════════════════════════════════════════════════════
   private updateUrlQuery(query: string): void {
-    // Solo en navegador
     if (typeof window === 'undefined') return;
 
-    // Usar replaceState para no añadir entradas al historial por cada tecla
     const url = new URL(window.location.href);
     if (query) {
       url.searchParams.set('q', query);
@@ -176,9 +145,6 @@ export class SearchComponent implements OnInit, OnDestroy {
     window.history.replaceState({}, '', url.toString());
   }
 
-  // ═════════════════════════════════════════════════════════════
-  // BÚSQUEDA POR TECLA ENTER (PARA USUARIOS QUE PREFIEREN)
-  // ═════════════════════════════════════════════════════════════
   onSearchEnter(): void {
     const query = this.searchControl.value;
     if (query && query.length >= 2) {
@@ -187,9 +153,6 @@ export class SearchComponent implements OnInit, OnDestroy {
     }
   }
 
-  // ═════════════════════════════════════════════════════════════
-  // LIMPIAR BÚSQUEDA
-  // ═════════════════════════════════════════════════════════════
   clearSearch(): void {
     this.searchControl.setValue('');
     this.currentQuery.set('');
@@ -198,9 +161,6 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.updateUrlQuery('');
   }
 
-  // ═════════════════════════════════════════════════════════════
-  // PAGINACIÓN
-  // ═════════════════════════════════════════════════════════════
   goToPage(page: number): void {
     if (page < 1 || (!this.hasNextPage() && page > 1)) return;
 
@@ -208,7 +168,6 @@ export class SearchComponent implements OnInit, OnDestroy {
     const query = this.searchControl.value;
     if (query && query.length >= 2) {
       this.performSearch(query, page);
-      // Scroll suave al inicio de resultados
       document.querySelector('#search-results')?.scrollIntoView({ behavior: 'smooth' });
     }
   }

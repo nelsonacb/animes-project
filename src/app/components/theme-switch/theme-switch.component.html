@@ -1,12 +1,10 @@
 <div class="flex items-center gap-2">
-  <!-- Label de texto (opcional) -->
   @if (showLabel) {
     <span class="text-sm text-gray-600 dark:text-gray-300 hidden sm:inline">
       {{ isDarkMode() ? 'Oscuro' : 'Claro' }}
     </span>
   }
 
-  <!-- Toggle Switch con ícono -->
   <mat-slide-toggle
     [checked]="isDarkMode()"
     (change)="onToggle()"
@@ -19,7 +17,6 @@
     }
   </mat-slide-toggle>
 
-  <!-- Botón alternativo solo ícono (para móvil) -->
   <button
     mat-icon-button
     (click)="onToggle()"

@@ -1,19 +1,15 @@
 <div class="p-4 md:p-6 max-w-7xl mx-auto">
-  <!-- 🔁 Loading con Material ProgressBar -->
   @if (loading()) {
     <app-ui-loading [show]="loading()" message="Loading anime..." size="medium" />
   }
 
-  <!-- 📺 Grid de Anime Cards -->
   @if (!loading() && animes().length > 0) {
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
       @for (anime of animes(); track anime.mal_id) {
-        <!-- 🎯 Usar el componente reutilizable -->
         <app-anime-card [anime]="anime" [showRank]="true" [maxGenres]="2" />
       }
     </div>
 
-    <!-- 🔢 Paginación con Material Buttons -->
     <app-ui-pagination
       [currentPage]="currentPage()"
       [hasNextPage]="hasNextPage()"
@@ -21,12 +17,10 @@
     />
   }
 
-  <!-- ❌ Error State -->
   @if (error()) {
     <app-ui-error [message]="error()!" [showRetry]="true" (retry)="loadAnime()" />
   }
 
-  <!-- 📭 Empty State (opcional) -->
   @if (!loading() && !error() && animes().length === 0) {
     <div class="text-center py-16">
       <mat-icon class="text-gray-400 text-5xl mb-4">search_off</mat-icon>

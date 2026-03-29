@@ -1,4 +1,3 @@
-/* Animación de "shake" para el ícono de error (llama la atención) */
 mat-icon {
   animation: shake 0.5s ease-in-out;
 }
@@ -16,7 +15,6 @@ mat-icon {
   }
 }
 
-/* Asegurar que el botón esté centrado */
 button {
   margin: 0 auto;
 }

@@ -1,4 +1,3 @@
-/* Ajustes para selects de Material */
 ::ng-deep .mat-mdc-form-field {
   --mdc-outlined-text-field-outline-color: #e5e7eb;
 }
@@ -7,7 +6,6 @@
   --mdc-outlined-text-field-outline-color: #424242;
 }
 
-/* Animación de entrada para cards */
 app-anime-card {
   animation: fadeIn 0.3s ease-out;
 }
@@ -23,7 +21,6 @@ app-anime-card {
   }
 }
 
-/* Chips de temporadas con hover effect */
 mat-chip {
   transition: all 0.2s ease;
 }

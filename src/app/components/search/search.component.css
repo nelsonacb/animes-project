@@ -1,25 +1,21 @@
-/* Ajustes para el input de Material */
 ::ng-deep .mat-mdc-form-field {
   width: 100%;
 }
 
 ::ng-deep .mat-mdc-form-field-flex {
-  border-radius: 0.5rem; /* rounded-lg */
+  border-radius: 0.5rem;
 }
 
-/* Dark mode: ajustar colores del input */
 .dark ::ng-deep .mat-mdc-form-field {
   --mdc-outlined-text-field-outline-color: #424242;
   --mdc-outlined-text-field-input-text-color: #f9fafb;
   --mdc-outlined-text-field-label-text-color: #9ca3af;
 }
 
-/* Focus state más visible */
 ::ng-deep .mat-mdc-form-field.mat-focused .mat-mdc-form-field-outline {
   --mdc-outlined-text-field-focus-outline-color: #3f51b5;
 }
 
-/* Animación suave para resultados */
 app-anime-card {
   animation: fadeIn 0.3s ease-out;
 }
@@ -35,7 +31,6 @@ app-anime-card {
   }
 }
 
-/* Scroll suave al cargar resultados */
 #search-results {
-  scroll-margin-top: 100px; /* Para compensar el navbar fijo */
+  scroll-margin-top: 100px;
 }

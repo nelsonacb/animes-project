@@ -10,30 +10,14 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrls: ['./ui-pagination.component.css'],
 })
 export class UiPaginationComponent {
-  // ═══════════════════════════════════════════════════════════════
-  // SIGNAL INPUTS (Angular 17+) - Más limpios que @Input()
-  // ═══════════════════════════════════════════════════════════════
-
-  // Página actual (requerido)
   currentPage = input.required<number>();
 
-  // ¿Hay página siguiente? (requerido)
   hasNextPage = input.required<boolean>();
 
-  // Label personalizado para botones (opcional)
   prevLabel = input<string>('Anterior');
   nextLabel = input<string>('Siguiente');
 
-  // ═══════════════════════════════════════════════════════════════
-  // SIGNAL OUTPUTS - Eventos que emite el componente
-  // ═══════════════════════════════════════════════════════════════
-
-  // Evento cuando se cambia de página
   pageChanged = output<number>();
-
-  // ═══════════════════════════════════════════════════════════════
-  // MÉTODOS
-  // ═══════════════════════════════════════════════════════════════
 
   goToPrevious(): void {
     const current = this.currentPage();

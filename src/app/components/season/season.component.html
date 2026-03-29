@@ -1,9 +1,7 @@
 <div class="min-h-screen py-8 px-4 transition-colors" [class]="getAnimeSeasonBGClasses()">
   <div class="max-w-7xl mx-auto">
-    <!-- 📅 Header con Título y Filtros -->
     <div class="mb-8">
       <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
-        <!-- Título -->
         <div>
           <h1 class="text-3xl font-bold mb-2" [class]="getAnimeSeasonClasses()">
             <mat-icon class="text-primary align-middle mr-2">calendar_today</mat-icon>
@@ -19,7 +17,6 @@
           }
         </div>
 
-        <!-- Botón ir a temporada actual -->
         @if (!isCurrentSeason()) {
           <button mat-button color="primary" (click)="goToCurrentSeason()" class="text-primary!">
             <mat-icon>today</mat-icon>
@@ -28,9 +25,7 @@
         }
       </div>
 
-      <!-- Filtros: Año y Temporada -->
       <div class="flex flex-wrap gap-4">
-        <!-- Select de Año -->
         <mat-form-field appearance="outline" class="w-full md:w-48">
           <mat-label>Año</mat-label>
           <mat-select [value]="selectedYear()" (selectionChange)="onYearChange($event.value)">
@@ -45,7 +40,6 @@
           </mat-select>
         </mat-form-field>
 
-        <!-- Select de Temporada -->
         <mat-form-field appearance="outline" class="w-full md:w-56">
           <mat-label>Temporada</mat-label>
           <mat-select [value]="selectedSeason()" (selectionChange)="onSeasonChange($event.value)">
@@ -62,7 +56,6 @@
         </mat-form-field>
       </div>
 
-      <!-- Chips de acceso rápido a temporadas del año seleccionado -->
       <div class="flex flex-wrap gap-2 mt-4">
         @for (season of availableSeasons; track season.value) {
           <mat-chip
@@ -82,14 +75,12 @@
       </div>
     </div>
 
-    <!-- ✅ LOADING: Componente reutilizable -->
     <app-ui-loading
       [show]="loading()"
       message="Cargando animes de {{ seasonTitle().toLowerCase() }}..."
       size="medium"
     />
 
-    <!-- ✅ ERROR: Componente reutilizable -->
     @if (error()) {
       <app-ui-error
         [message]="error()!"
@@ -99,7 +90,6 @@
       />
     }
 
-    <!-- 📺 Grid de Animes (solo si no hay loading ni error) -->
     @if (!loading() && !error() && animes().length > 0) {
       <div id="season-results" class="mb-4">
         <p class="text-sm text-gray-600 dark:text-gray-400">
@@ -113,7 +103,6 @@
         }
       </div>
 
-      <!-- ✅ PAGINATION: Componente reutilizable -->
       <app-ui-pagination
         [currentPage]="currentPage()"
         [hasNextPage]="hasNextPage()"
@@ -123,7 +112,6 @@
       />
     }
 
-    <!-- 📭 Empty State (específico de este componente) -->
     @if (!loading() && !error() && animes().length === 0) {
       <div class="text-center py-20">
         <mat-icon class="text-gray-400 dark:text-gray-600 text-6xl mb-4"> calendar_off </mat-icon>

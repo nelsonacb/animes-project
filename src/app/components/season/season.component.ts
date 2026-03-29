@@ -41,27 +41,18 @@ export class SeasonComponent implements OnInit, OnDestroy {
   private route = inject(ActivatedRoute);
   private themeService = inject(ThemeService);
 
-  // ═══════════════════════════════════════════════════════════════
-  // SIGNALS PARA ESTADO
-  // ═══════════════════════════════════════════════════════════════
   animes = signal<Anime[]>([]);
   loading = signal(false);
   error = signal<string | null>(null);
 
-  // Temporada y año seleccionados
   selectedYear = signal<number>(new Date().getFullYear());
   selectedSeason = signal<SeasonType>('winter');
 
-  // Información de la temporada actual
   currentSeasonInfo = signal<{ year: number; season: SeasonType } | null>(null);
 
-  // ✅ Para paginación (la API de temporadas soporta paginación)
   currentPage = signal(1);
   hasNextPage = signal(false);
 
-  // ═══════════════════════════════════════════════════════════════
-  // DATOS PARA SELECTS
-  // ═══════════════════════════════════════════════════════════════
   availableYears = this.animeService.getAvailableYears();
   availableSeasons = this.animeService.getAvailableSeasons();
 
@@ -77,9 +68,6 @@ export class SeasonComponent implements OnInit, OnDestroy {
       : 'bg-gray-50'; // Light mode
   }
 
-  // ═══════════════════════════════════════════════════════════════
-  // COMPUTED: Título de la temporada
-  // ═══════════════════════════════════════════════════════════════
   seasonTitle = computed(() => {
     const seasonLabels: Record<SeasonType, string> = {
       winter: 'Invierno',
@@ -90,18 +78,12 @@ export class SeasonComponent implements OnInit, OnDestroy {
     return `${seasonLabels[this.selectedSeason()]} ${this.selectedYear()}`;
   });
 
-  // ═══════════════════════════════════════════════════════════════
-  // COMPUTED: ¿Es la temporada actual?
-  // ═══════════════════════════════════════════════════════════════
   isCurrentSeason = computed(() => {
     const current = this.currentSeasonInfo();
     if (!current) return false;
     return current.year === this.selectedYear() && current.season === this.selectedSeason();
   });
 
-  // ═══════════════════════════════════════════════════════════════
-  // CLEANUP PARA SUSCRIPCIONES
-  // ═══════════════════════════════════════════════════════════════
   private destroy$ = new Subject<void>();
 
   ngOnInit(): void {
@@ -132,9 +114,6 @@ export class SeasonComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  // ═══════════════════════════════════════════════════════════════
-  // MÉTODO: Cargar animes de la temporada
-  // ═══════════════════════════════════════════════════════════════
   loadSeasonAnime(): void {
     this.loading.set(true);
     this.error.set(null);
@@ -163,13 +142,13 @@ export class SeasonComponent implements OnInit, OnDestroy {
 
   onYearChange(year: number): void {
     this.selectedYear.set(year);
-    this.currentPage.set(1); // Resetear paginación al cambiar año
+    this.currentPage.set(1);
     this.loadSeasonAnime();
   }
 
   onSeasonChange(season: SeasonType): void {
     this.selectedSeason.set(season);
-    this.currentPage.set(1); // Resetear paginación al cambiar temporada
+    this.currentPage.set(1);
     this.loadSeasonAnime();
   }
 
@@ -183,11 +162,9 @@ export class SeasonComponent implements OnInit, OnDestroy {
     }
   }
 
-  // ✅ Método para la paginación reutilizable
   onPageChanged(page: number): void {
     this.currentPage.set(page);
     this.loadSeasonAnime();
-    // Scroll suave al inicio de resultados
     document.querySelector('#season-results')?.scrollIntoView({ behavior: 'smooth' });
   }
 

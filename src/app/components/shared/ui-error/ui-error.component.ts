@@ -12,32 +12,16 @@ import { ThemeService } from '../../../services/theme.service';
 })
 export class UiErrorComponent {
   private themeService = inject(ThemeService);
-  // ═══════════════════════════════════════════════════════════════
-  // SIGNAL INPUTS - Configuración del error
-  // ═══════════════════════════════════════════════════════════════
 
-  // Mensaje de error (requerido)
   message = input.required<string>();
 
-  // ¿Mostrar botón de reintentar? (por defecto true)
   showRetry = input<boolean>(true);
 
-  // Texto personalizado para el botón
   retryLabel = input<string>('Reintentar');
 
-  // Ícono personalizado (opcional)
   icon = input<string>('error_outline');
 
-  // ═══════════════════════════════════════════════════════════════
-  // SIGNAL OUTPUTS - Eventos
-  // ═══════════════════════════════════════════════════════════════
-
-  // Evento cuando se hace click en reintentar
   retry = output<void>();
-
-  // ═══════════════════════════════════════════════════════════════
-  // MÉTODOS
-  // ═══════════════════════════════════════════════════════════════
 
   onRetry(): void {
     this.retry.emit();

@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
-  // Home: Top Anime
   {
     path: '',
     loadComponent: () =>
@@ -9,7 +8,6 @@ export const routes: Routes = [
     title: 'Top Anime - AnimeHub',
   },
 
-  // Detalle de Anime: /anime/:id
   {
     path: 'anime/:id',
     loadComponent: () =>
@@ -19,7 +17,6 @@ export const routes: Routes = [
     title: 'Detalle de Anime - AnimeHub',
   },
 
-  // Búsqueda: /search?q=...
   {
     path: 'search',
     loadComponent: () =>
@@ -27,7 +24,6 @@ export const routes: Routes = [
     title: 'Buscar Anime - AnimeHub',
   },
 
-  // Temporadas: /season/:year/:name
   {
     path: 'season/:year/:name',
     loadComponent: () =>
@@ -35,23 +31,20 @@ export const routes: Routes = [
     title: 'Anime por Temporada - AnimeHub',
   },
 
-  //   // Géneros: /genres
-  //   {
-  //     path: 'genres',
-  //     loadComponent: () =>
-  //       import('./components/genres/genres.component').then((m) => m.GenresComponent),
-  //     title: 'Géneros de Anime - AnimeHub',
-  //   },
+  {
+    path: 'genres',
+    loadComponent: () =>
+      import('./components/genres/genres.component').then((m) => m.GenresComponent),
+    title: 'Géneros de Anime - AnimeHub',
+  },
 
-  //   // Favorites: /favorites
-  //   {
-  //     path: 'favorites',
-  //     loadComponent: () =>
-  //       import('./components/favorites/favorites.component').then((m) => m.FavoritesComponent),
-  //     title: 'Favorites Animes - AnimeHub',
-  //   },
+  {
+    path: 'favorites',
+    loadComponent: () =>
+      import('./components/favorites/favorites.component').then((m) => m.FavoritesComponent),
+    title: 'Favorites Animes - AnimeHub',
+  },
 
-  // Ruta no encontrada (404)
   {
     path: '**',
     redirectTo: '',

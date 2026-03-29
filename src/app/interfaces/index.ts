@@ -74,3 +74,23 @@ export interface TopAnimeResponse {
   pagination: PaginationInfo;
   data: Anime[];
 }
+
+export interface GenreResponse {
+  data: AnimeGenre[];
+  mal_id: number;
+  name: string;
+  count: number;
+  url: string;
+}
+
+export interface AnimeGenre extends Anime {
+  mal_id: number;
+  name: string;
+  count: number;
+}
+
+export interface Genre {
+  mal_id: number;
+  name: string;
+  count: number;
+}

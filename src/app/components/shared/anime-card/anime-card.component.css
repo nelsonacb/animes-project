@@ -13,18 +13,30 @@
   overflow: hidden;
 }
 
-/* Hover effect suave para el card */
 mat-card {
   will-change: transform, box-shadow;
 }
 
-/* Asegurar que los chips de Material no sobresalgan */
 mat-chip {
   white-space: nowrap;
 }
 
-/* Dark mode: ajustar bordes de Material */
 .dark mat-card {
   --mdc-outlined-card-outline-color: theme('colors.gray.700');
   --mdc-outlined-card-container-color: theme('colors.gray.800');
+}
+
+.snackbar-success {
+  background: #10b981 !important;
+  color: white !important;
+}
+
+.snackbar-info {
+  background: #3b82f6 !important;
+  color: white !important;
+}
+
+.snackbar-success .mat-mdc-snack-bar-action,
+.snackbar-info .mat-mdc-snack-bar-action {
+  color: white !important;
 }

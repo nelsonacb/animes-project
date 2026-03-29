@@ -3,7 +3,6 @@
   appearance="outlined"
   [routerLink]="['/anime', anime.mal_id]"
 >
-  <!-- 🖼️ Imagen con overlay hover -->
   <div class="relative aspect-3/4 overflow-hidden rounded-t-lg">
     <img
       [src]="getImageUrl()"
@@ -14,7 +13,6 @@
       height="600"
     />
 
-    <!-- Badge de Rank -->
     @if (showRank && anime.rank) {
       <span
         class="absolute top-2 left-2 bg-yellow-500 text-black text-xs font-bold px-2 py-1 rounded-full shadow-md"
@@ -23,7 +21,20 @@
       </span>
     }
 
-    <!-- Overlay con info al hacer hover -->
+    @if (showFavoriteButton) {
+      <button
+        mat-mini-fab
+        [color]="isFavorite() ? 'warn' : undefined"
+        class="absolute top-2 right-2 w-8! h-8! shadow-lg hover:scale-110 transition-transform"
+        (click)="toggleFavorite($event)"
+        aria-label="Agregar a favoritos"
+      >
+        <mat-icon class="scale-75">
+          {{ isFavorite() ? 'favorite' : 'favorite_border' }}
+        </mat-icon>
+      </button>
+    }
+
     <div
       class="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
     >
@@ -36,7 +47,6 @@
     </div>
   </div>
 
-  <!-- 📋 Contenido del card -->
   <mat-card-content class="p-4 grow flex flex-col">
     <h3
       class="font-bold text-lg line-clamp-2 mb-2 group-hover:text-primary transition-colors"
@@ -45,14 +55,12 @@
       {{ anime.title }}
     </h3>
 
-    <!-- Título en inglés -->
     @if (anime.title_english && anime.title_english !== anime.title) {
       <p class="text-sm line-clamp-1 mb-3" [class]="getAnimeCardClasses()">
         {{ anime.title_english }}
       </p>
     }
 
-    <!-- Tags: Tipo + Episodios + Estado -->
     <div class="flex flex-wrap gap-2 mb-3">
       <mat-chip class="h-6! text-xs!" color="primary">
         {{ anime.type }}
@@ -65,7 +73,6 @@
       </mat-chip>
     </div>
 
-    <!-- Géneros (truncados) -->
     @if (anime.genres?.length) {
       <div class="flex flex-wrap gap-1 mb-3">
         @for (genre of anime.genres.slice(0, maxGenres); track genre.mal_id) {
@@ -83,7 +90,6 @@
       </div>
     }
 
-    <!-- Spacer para empujar el footer al fondo -->
     <div class="grow"></div>
 
     <mat-card-actions
@@ -91,7 +97,6 @@
     >
       <div class="flex items-center gap-1">
         <mat-icon class="text-yellow-500 scale-90">star</mat-icon>
-        <!-- ✅ SCORE: Negro en light, blanco en dark -->
         <span class="font-bold" [class]="getAnimeCardClasses()">{{ anime.score }}</span>
         <span class="text-xs text-gray-500 dark:text-gray-400">
           ({{ anime.scored_by | number: '1.0-0' }})
@@ -99,7 +104,6 @@
       </div>
 
       @if (anime.studios?.[0]) {
-        <!-- ✅ ESTUDIO: Gris oscuro en light, gris claro en dark -->
         <span class="text-xs text-gray-600 dark:text-gray-400 truncate max-w-30">
           {{ anime.studios[0].name }}
         </span>

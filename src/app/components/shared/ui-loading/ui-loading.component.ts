@@ -11,28 +11,15 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   styleUrls: ['./ui-loading.component.css'],
 })
 export class UiLoadingComponent {
-  // ═══════════════════════════════════════════════════════════════
-  // SIGNAL INPUTS - Configuración del loader
-  // ═══════════════════════════════════════════════════════════════
-
-  // ¿Mostrar el loader? (por defecto true)
   show = input<boolean>(true);
 
-  // Mensaje personalizado (opcional)
   message = input<string>('Loading...');
 
-  // Tamaño del spinner: 'small' | 'medium' | 'large'
   size = input<'small' | 'medium' | 'large'>('medium');
 
-  // Modo de la barra de progreso: 'indeterminate' | 'determinate'
   progressMode = input<'indeterminate' | 'determinate'>('indeterminate');
 
-  // Valor de progreso (solo si progressMode='determinate')
   progressValue = input<number>(0);
-
-  // ═══════════════════════════════════════════════════════════════
-  // MÉTODO HELPER: Obtener tamaño del spinner
-  // ═══════════════════════════════════════════════════════════════
 
   getSpinnerDiameter(): number {
     const sizes = { small: 30, medium: 40, large: 60 };

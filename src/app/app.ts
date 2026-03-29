@@ -6,7 +6,7 @@ import { ThemeService } from '../app/services/theme.service';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, AnimeListComponent, NavbarComponent],
+  imports: [RouterOutlet, NavbarComponent],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
@@ -14,7 +14,6 @@ export class App {
   protected readonly title = signal('animes-project');
   private themeService = inject(ThemeService);
 
-  // ✅ Método para generar clases dinámicamente
   getMainClasses(): string {
     return this.themeService.isDarkMode()
       ? 'min-h-screen bg-gray-900 transition-colors' // Dark mode

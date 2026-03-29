@@ -23,7 +23,7 @@ import { Anime } from '../../interfaces';
     MatIconModule,
     MatButtonModule,
     MatProgressSpinnerModule,
-    DatePipe, // ← Para formatear fechas
+    DatePipe,
   ],
   templateUrl: './anime-detail.component.html',
 })
@@ -32,25 +32,19 @@ export class AnimeDetailComponent implements OnInit {
   private animeService = inject(AnimeService);
   private themeService = inject(ThemeService);
 
-  // Signals para estado reactivo
   anime = signal<Anime | null>(null);
   loading = signal(true);
   error = signal<string | null>(null);
 
   getAnimeDetailClasses(): string {
-    return this.themeService.isDarkMode()
-      ? 'text-white' // Dark mode
-      : 'text-gray-900'; // Light mode
+    return this.themeService.isDarkMode() ? 'text-white' : 'text-gray-900';
   }
 
   getAnimeDetailBGClasses(): string {
-    return this.themeService.isDarkMode()
-      ? 'bg-gray-900' // Dark mode
-      : 'bg-gray-50'; // Light mode
+    return this.themeService.isDarkMode() ? 'bg-gray-900' : 'bg-gray-50';
   }
 
   ngOnInit(): void {
-    // Obtener el ID de la URL: /anime/:id
     const idParam = this.route.snapshot.paramMap.get('id');
     const id = Number(idParam);
 

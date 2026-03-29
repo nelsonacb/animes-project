@@ -1,13 +1,11 @@
 @if (show()) {
   <div class="text-center py-12" role="status" aria-live="polite">
-    <!-- Barra de progreso superior -->
     <mat-progress-bar
       [mode]="progressMode()"
       [value]="progressValue()"
       class="mb-4"
     ></mat-progress-bar>
 
-    <!-- Spinner + Mensaje -->
     <div class="flex justify-center items-center">
       <mat-spinner [diameter]="getSpinnerDiameter()"></mat-spinner>
       <p class="ml-4 text-gray-600 dark:text-gray-300">

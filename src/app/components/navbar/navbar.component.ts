@@ -42,20 +42,17 @@ export class NavbarComponent implements AfterViewInit {
   ];
 
   ngAfterViewInit(): void {
-    // ✅ Verificación extra de seguridad (opcional, el servicio ya protege)
     if (isPlatformBrowser(this.platformId)) {
       this.loadTheme();
 
       effect(() => {
         this.applyTheme(this.isDarkMode());
-        // ✅ Usar storage.setItem en lugar de localStorage.setItem
         this.storage.setItem('theme', this.isDarkMode() ? 'dark' : 'light');
       });
     }
   }
 
   private loadTheme(): void {
-    // ✅ Usar storage.getItem en lugar de localStorage.getItem
     const savedTheme = this.storage.getItem('theme');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
@@ -65,7 +62,6 @@ export class NavbarComponent implements AfterViewInit {
   }
 
   private applyTheme(isDark: boolean): void {
-    // ✅ document sigue necesitando protección (no está en el servicio)
     if (typeof document === 'undefined') return;
 
     if (isDark) {
