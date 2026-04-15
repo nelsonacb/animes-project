@@ -39,13 +39,6 @@ export const routes: Routes = [
   },
 
   {
-    path: 'favorites',
-    loadComponent: () =>
-      import('./components/favorites/favorites.component').then((m) => m.FavoritesComponent),
-    title: 'Favorites Animes - AnimeHub',
-  },
-
-  {
     path: '**',
     redirectTo: '',
     title: 'Page Not Found - AnimeHub',

@@ -1,6 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { AnimeListComponent } from './components/anime-list/anime-list.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ThemeService } from '../app/services/theme.service';
 

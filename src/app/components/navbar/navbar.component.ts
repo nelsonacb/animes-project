@@ -38,7 +38,6 @@ export class NavbarComponent implements AfterViewInit {
     { label: 'Search', icon: 'search', route: '/search' },
     { label: 'Seasons', icon: 'calendar_today', route: '/season/2025/fall' },
     { label: 'Genres', icon: 'local_fire_department', route: '/genres' },
-    { label: 'Favorites', icon: 'favorite', route: '/favorites' },
   ];
 
   ngAfterViewInit(): void {

@@ -21,20 +21,6 @@
       </span>
     }
 
-    @if (showFavoriteButton) {
-      <button
-        mat-mini-fab
-        [color]="isFavorite() ? 'warn' : undefined"
-        class="absolute top-2 right-2 w-8! h-8! shadow-lg hover:scale-110 transition-transform"
-        (click)="toggleFavorite($event)"
-        aria-label="Agregar a favoritos"
-      >
-        <mat-icon class="scale-75">
-          {{ isFavorite() ? 'favorite' : 'favorite_border' }}
-        </mat-icon>
-      </button>
-    }
-
     <div
       class="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
     >
