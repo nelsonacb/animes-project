@@ -1,59 +1,37 @@
-# AnimesProject
+# 🎌 AnimeTracker — Angular App
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.0.
+Aplicación web desarrollada con **Angular** que muestra los animes más populares y los animes de la temporada actual. Ideal para seguir tus series favoritas y descubrir nuevos títulos.
 
-## Development server
+![Vista previa del proyecto](public/screenshot.png)
 
-To start a local development server, run:
+> _Imagen ilustrativa de la interfaz de la aplicación._
 
-```bash
-ng serve
-```
+---
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## ✨ Características
 
-## Code scaffolding
+- 🔥 **Animes más populares** – Lista actualizada con los títulos con mayor puntuación y seguidores.
+- 🗓️ **Animes de la temporada actual** – Descubre qué se está emitiendo ahora mismo.
+- 🔍 Búsqueda y filtros por género, estado, año, etc.
+- 📱 Diseño responsive (mobile first).
+- ⚡ Consumo de API externa (Jikan).
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+---
 
-```bash
-ng generate component component-name
-```
+## 🛠️ Tecnologías utilizadas
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+- **Angular** (última versión LTS)
+- **TypeScript**
+- **Material UI**
+- **API REST** (ej. [Jikan API](https://jikan.moe/))
+- **RxJS** para manejo de datos asíncronos
 
-```bash
-ng generate --help
-```
+---
 
-## Building
+## 🚀 Cómo ejecutar el proyecto localmente
 
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+1. Clona el repositorio:
+   ```bash
+   git clone https://github.com/nelsonacb/animes-project.git
+   cd animes-project
+   ```
